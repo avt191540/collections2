@@ -6,9 +6,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-//        task1();
+        task1();
 //        task2();
-        task3();
+//        task3();
+//        task4();
 
     }
     private static void task1() {
@@ -28,11 +29,22 @@ public class Main {
     }
 
     private static void task3() {
-        List<String> words = new ArrayList<>(List.of("Список", "дублей", "слов", "без", "слов", "дублей"));
+        List<String> words = new ArrayList<>(List.of
+                ("Список", "дублей", "слов", "без", "слов", "дублей", "сделать", "слов"));
         //Выводим исходный список
         System.out.println(words);
-        //Выводим из исходного списка только четные числа без повторений в порядке возрастания
+        //Выводим список слов без дублей
         System.out.println(removeDuplicateWords(words));
+    }
+
+    private static void task4() {
+        List<String> words = new ArrayList<>(List.of
+                ("Список", "дублей", "слов", "без", "слов", "дублей", "сделать", "слов"));
+        //Выводим исходный список
+        System.out.println(words);
+        //Выводим количество дублей (повторений) слов присутствующих в исходном списке
+        System.out.println("Количество повторяющихся слов (дублей) = " +
+                calculationOfNumberDuplicateWords(words));
     }
 
     //Удаление четных чисел из списка, возвращается новый список c нечетными числами
@@ -79,8 +91,8 @@ public class Main {
         return numsResult;
     }
 
-    //Удаление дублей из списка слов, возвращается новый список без дублей
-    private static List removeDuplicateWords(List<String> words) {
+    //Удаление дублей слов из списка, возвращается новый список без дублей
+    private static List<String> removeDuplicateWords(List<String> words) {
         List<String> wordsResult = new ArrayList<>(words);
         wordsResult.sort(Comparator.naturalOrder());    //Сортируем по возростанию
         Iterator<String> iterator = wordsResult.iterator();
@@ -97,5 +109,27 @@ public class Main {
             }
         }
         return wordsResult;
+    }
+
+    //Вычисление количества дублей слов в списке
+    private static int calculationOfNumberDuplicateWords(List<String> words) {
+        List<String> wordsResult = new ArrayList<>(words);
+        wordsResult.sort(Comparator.naturalOrder());    //Сортируем по возростанию
+        Iterator<String> iterator = wordsResult.iterator();
+        //Организуем цикл для вычисления количества повторяющихся слов
+        int numberDuplicate = 0;
+        String s1 = "";  String s2 = "";       //Вспомогательные переменные
+        for (int i = 0; iterator.hasNext(); i++) {
+            if (i == 0) {
+                s1 = iterator.next();
+            } else {
+                s2 = iterator.next();
+                if (s1.equals(s2)) {
+                    numberDuplicate++;
+                    iterator.remove();
+                } else s1 = s2;
+            }
+        }
+        return numberDuplicate;
     }
 }
